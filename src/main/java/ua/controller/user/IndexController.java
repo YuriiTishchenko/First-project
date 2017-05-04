@@ -9,12 +9,12 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.SessionAttributes;
-import org.springframework.web.bind.support.SessionStatus;
 
 import ua.dto.filter.ItemFilter;
 import ua.entity.User;
@@ -26,6 +26,7 @@ import ua.service.ProducerService;
 import ua.service.SpecificationService;
 import ua.service.TypeDetailService;
 import ua.service.UserService;
+import ua.validator.UserValidator;
 
 @Controller
 @RequestMapping("/")
@@ -56,11 +57,22 @@ public class IndexController {
 	@Autowired
 	private UserRepository userRepository;
 	
+	@ModelAttribute("filter")
+	public ItemFilter getFilter() {
+		return new ItemFilter();
+	}
+	
+	@InitBinder("user")
+	protected void initBinder(WebDataBinder binder) {
+		binder.setValidator(new UserValidator(userService));
+	}
+
+	
 	@RequestMapping("/")
 	public String index(Principal principal, Model model, @PageableDefault Pageable pageable,@ModelAttribute("filter") ItemFilter filter){
-		if(principal!=null)
-			System.out.println(principal.getName());
-		model.addAttribute("page", itemService.findAll(pageable, filter));
+		/*if(principal!=null)
+			System.out.println(principal.getName());*/
+		model.addAttribute("page", itemService.findAllIndex(pageable, filter));
 		model.addAttribute("producers", producerService.findAll());
 		model.addAttribute("nameDetails", nameDetailService.findAll());
 		model.addAttribute("typeDetails", typeDetailService.findAll());
@@ -71,12 +83,11 @@ public class IndexController {
 	
 	@RequestMapping("/typeDetailPage/{id}")
 	 public String typeDetailPage(@PathVariable(value = "id") int id , Model model, @PageableDefault Pageable pageable,@ModelAttribute("filter") ItemFilter filter){
-		System.out.println("start");
 		filter.getTypeDetailIds().add(id);
 		model.addAttribute("page", itemService.findAll(pageable, filter));
 		model.addAttribute("producers", producerService.findAll());
-		model.addAttribute("typeDetails", typeDetailService.findAll());
 		model.addAttribute("nameDetails", nameDetailService.findAll());
+		model.addAttribute("typeDetails", typeDetailService.findAll());
 		model.addAttribute("specifications", specificationService.findAll());
 		model.addAttribute("descriptions",descriptionService.findAll());
 		return "user-typeDetailPage";
@@ -91,6 +102,8 @@ public class IndexController {
 	public String login(){
 		return "user-login";
 	}
+	
+	
 	
 	@RequestMapping("/registration")
 	public String registration(Model model){
@@ -123,10 +136,21 @@ public class IndexController {
 		return "user-shoppingCart";
 	}
 	
-	@RequestMapping(value = "/shoppingCart/delete/{id}", method = RequestMethod.GET)
+	@RequestMapping(value = "/shoppingCart/delete/{id}")
 	public String deleteItems(@PathVariable(value = "id") int id, Principal principal) {
 		userService.deleteItems(id, principal);
 		return "redirect:/shoppingCart/";
 
+	}
+	
+	
+	@RequestMapping("/shoppingCart/bynow/{id}")
+	public String byNow(@PathVariable(value = "id") int id,Principal principal){
+		String username = principal.getName();
+		User user = userRepository.findByUsername(username);
+		String mailBody =  userService.preparationToSend(username);
+		userService.sendMail("order", "ur4ukukraine@gmail.com", mailBody);
+		userService.deleteItems(id, principal);
+		return "redirect:/";
 	}
 }

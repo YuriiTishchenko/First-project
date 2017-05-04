@@ -46,7 +46,7 @@
 					<label for="name" class="col-sm-offset-2 col-sm-10"><form:errors path="name"/></label>
 						<label for="name" class="col-sm-2 control-label">Name</label>
 						<div class="col-sm-10">
-							<form:input type="text" class="form-control" path="name" id="name"/>
+							<form:textarea type="text" class="form-control" path="name" id="name"/>
 						</div>
 					</div>
 					<div class="form-group">

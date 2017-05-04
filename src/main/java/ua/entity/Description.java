@@ -13,7 +13,7 @@ import javax.persistence.Table;
 @Table(name="description", indexes=@Index(columnList="_name"))
 public class Description extends AbstractEntity {
 	
-	@Column(name = "_name")
+	@Column(name = "_name" , length = 1000)
 	private String name;
 	@OneToMany(mappedBy="description")
 	private List<Item> items = new ArrayList<>();

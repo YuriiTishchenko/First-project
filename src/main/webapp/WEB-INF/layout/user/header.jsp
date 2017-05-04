@@ -44,7 +44,7 @@
 	                        <button class="btn btn-primary">Sign in</button>
 	                           
 	                    </form:form>
-	                      <ul class="nav navbar-nav navbar-right">
+	                      <ul class="nav navbar-nav navbar-right" id="go">
 		                        <li><a href="/registration	">Registration</a></li>
 		                    </ul>
                     </security:authorize>

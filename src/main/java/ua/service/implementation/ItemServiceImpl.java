@@ -21,9 +21,10 @@ import ua.repository.ProducerRepository;
 import ua.repository.SpecificationRepository;
 import ua.repository.TypeDetailRepository;
 import ua.service.FileWriter;
-import ua.service.UserService;
 import ua.service.FileWriter.Folder;
 import ua.service.ItemService;
+import ua.service.UserService;
+import ua.service.specification.ItemIndexSpecification;
 import ua.service.specification.ItemSpecification;
 
 @Service
@@ -106,6 +107,12 @@ public class ItemServiceImpl implements ItemService {
 		Page<Item> items = repository.findAll(new ItemSpecification(filter), pageable);
 		return items;
 	}
+	@Override
+	public Page<Item> findAllIndex(Pageable pageable, ItemFilter filter) {
+		Page<Item> items = repository.findAll(new ItemIndexSpecification(filter), pageable);
+		return items;
+	}
+	
 	@Override
 	public List<Item> findByUserId(Principal principal) {
 		return repository.findByUserId(userService.getUserId(principal));

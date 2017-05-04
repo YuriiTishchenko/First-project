@@ -5,8 +5,8 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <div class="container-fluid">
 	<div class="row">
-		<h3>
-			Sub Header
-		</h3>
+		<ul class="nav navbar-nav navbar-left">
+		             <li><a href="/admin/producer" class="btn btn-primary cart">Producer <span class="badge">${producer.count}</span></a></li>
+		            </ul>
 	</div>
 </div>

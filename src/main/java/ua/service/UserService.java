@@ -13,4 +13,7 @@ public interface UserService {
 	 void addItem(int Id, Principal principal);
 	 
 	 void deleteItems(int id,  Principal principal);
+	 
+	 void sendMail(String content, String email, String mailBody);
+	 String  preparationToSend(String username);
 }

@@ -18,6 +18,7 @@ public class Producer extends AbstractEntity {
 	@Column(name = "_name")
 	private String name;
 	
+	
 	@ManyToOne(fetch = FetchType.LAZY)
 	private Country country;
 	
@@ -49,5 +50,6 @@ public class Producer extends AbstractEntity {
 	public void setCountry(Country country) {
 		this.country = country;
 	}
+
 
 }

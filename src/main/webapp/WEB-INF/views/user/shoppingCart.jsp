@@ -14,12 +14,12 @@
 	<div class="col-md-12"
 		style="margin-top: 30px; background: #292d39; color: white; font-size: 16px; text-align: center;">
 		<div class="col-md-6" style="border-right: 1px solid #f4f4f4;">
-			Продукт</div>
+			Product</div>
 		<div class="col-md-2" style="border-right: 1px solid #f4f4f4;">
-			Ціна</div>
+			Price</div>
 		<div class="col-md-2" style="border-right: 1px solid #f4f4f4;">
-			Кількість</div>
-		<div class="col-md-2">Видалити</div>
+		</div>
+		<div class="col-md-2">Delete</div>
 	</div>
 
 	<c:forEach items="${carts.items}" var="cart">
@@ -38,7 +38,8 @@
 						<li>Name Detail : ${cart.nameDetail.name}</li>
 						<li>Producer : ${cart.producer.name}</li>
 						<li>Type Detail : ${cart.typeDetail.name}</li>
-						<li>Name spec: ${cart.specification.nameStringSpecification.name}</li>
+						<li>Name spec:
+							${cart.specification.nameStringSpecification.name}</li>
 						<li>value: ${cart.specification.value }</li>
 
 
@@ -47,23 +48,25 @@
 			</div>
 			<div class="col-md-2"
 				style="height: 300px; border-right: 1px solid #f4f4f4; text-align: center;">
-				<div class="product_price">${cart.price}<span class="price">грн</span>
+				<div class="product_price">${cart.price}<span class="price">$</span>
 				</div>
 			</div>
 			<div class="col-md-2 cell_3"
 				style="height: 200px; border-right: 1px solid #f4f4f4; text-align: center;">
 
-				<div class="quantity_box">
-					
-
+				<div>
+					<a style="font-size: 30px;" href="/shoppingCart/bynow/${cart.id}">
+						<button class="btn btn-cart" type="submit">ByNow</button>
+					</a>
 				</div>
 
 
 
 			</div>
 			<div class="col-md-2" style="text-align: center;">
-				<a style="font-size: 30px;" 
-					href="/shoppingCart/delete/${cart.id}">Delete</a>
+				<a style="font-size: 30px;" href="/shoppingCart/delete/${cart.id}">
+				<button class="btn btn-cart" type="submit">Delete</button>
+				</a>
 			</div>
 		</div>
 	</c:forEach>

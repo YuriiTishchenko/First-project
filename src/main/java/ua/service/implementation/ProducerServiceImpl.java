@@ -62,5 +62,5 @@ public class ProducerServiceImpl implements ProducerService {
 		return producerRepository.findAll(new ProducerSpecification(filter), pageable);
 	}
 
-	
+
 }

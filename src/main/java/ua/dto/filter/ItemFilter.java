@@ -9,6 +9,7 @@ public class ItemFilter {
 
 	private final static Pattern PATTERN = Pattern.compile("^([0-9]{1,18}\\.[0-9]{0,2})|([0-9]{1,18}\\,[0-9]{0,2})|([0-9]{1,18})$");
 
+	private String search = "";
 	
 	private String maxPrice = "";
 	
@@ -20,12 +21,42 @@ public class ItemFilter {
 	
 	private List<Integer> producerIds = new ArrayList<>();
 	
-	private List<Integer> typeDetailIds = new ArrayList<>();
-	
 	private List<Integer> nameDetailIds = new ArrayList<>();
 	
+	private List<Integer> typeDetailIds = new ArrayList<>();
 	
+	private String maxValue = "";
 	
+	private String minValue = "";
+	
+	private List<Integer> nameStringSpecificationIds = new ArrayList<>();
+
+	public String getMaxValue() {
+		return maxValue;
+	}
+
+	public void setMaxValue(String maxValue) {
+		if(PATTERN.matcher(maxValue).matches())min = new BigDecimal(maxValue);
+		this.maxValue = maxValue;
+	}
+
+	public String getMinValue() {
+		return minValue;
+	}
+
+	public void setMinValue(String minValue) {
+		if(PATTERN.matcher(minValue).matches())min = new BigDecimal(minValue);
+		this.minValue = minValue;
+	}
+
+	public List<Integer> getNameStringSpecificationIds() {
+		return nameStringSpecificationIds;
+	}
+
+	public void setNameStringSpecificationIds(
+			List<Integer> nameStringSpecificationIds) {
+		this.nameStringSpecificationIds = nameStringSpecificationIds;
+	}
 
 	
 
@@ -65,36 +96,36 @@ public class ItemFilter {
 		this.min = min;
 	}
 
-
 	public List<Integer> getProducerIds() {
 		return producerIds;
 	}
-
-
-	public List<Integer> getTypeDetailIds() {
-		return typeDetailIds;
-	}
-
-
-	public List<Integer> getNameDetailIds() {
-		return nameDetailIds;
-	}
-
 
 	public void setProducerIds(List<Integer> producerIds) {
 		this.producerIds = producerIds;
 	}
 
-
-	public void setTypeDetailIds(List<Integer> typeDetailIds) {
-		this.typeDetailIds = typeDetailIds;
+	public List<Integer> getNameDetailIds() {
+		return nameDetailIds;
 	}
-
 
 	public void setNameDetailIds(List<Integer> nameDetailIds) {
 		this.nameDetailIds = nameDetailIds;
 	}
 
+	public List<Integer> getTypeDetailIds() {
+		return typeDetailIds;
+	}
 
+	public void setTypeDetailIds(List<Integer> typeDetailIds) {
+		this.typeDetailIds = typeDetailIds;
+	}
+
+	public String getSearch() {
+		return search;
+	}
+
+	public void setSearch(String search) {
+		this.search = search;
+	}
 
 }

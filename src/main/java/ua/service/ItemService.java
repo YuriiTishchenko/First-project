@@ -20,6 +20,6 @@ public interface ItemService {
 		
 		Page<Item> findAll(Pageable pageable,ItemFilter filter);
 		 List<Item> findByUserId(Principal principal);
-		 
+		Page<Item> findAllIndex(Pageable pageable, ItemFilter filter);
 		 void addUsers(int id, Principal principal);
 }

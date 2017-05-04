@@ -169,7 +169,19 @@ public class ItemController {
 			buffer.append("&typeDetailIds=");
 			buffer.append(id);
 		}
-		
+		for (Integer id : filter.getNameStringSpecificationIds()) {
+			buffer.append("&nameStringSpecificationIds=");
+			buffer.append(id);
+		}
+
+		if (!filter.getMaxValue().isEmpty()) {
+			buffer.append("&maxValue=");
+			buffer.append(filter.getMaxValue());
+		}
+		if (!filter.getMinValue().isEmpty()) {
+			buffer.append("&minValue=");
+			buffer.append(filter.getMinValue());
+		}
 		return buffer.toString();
 	}
 }

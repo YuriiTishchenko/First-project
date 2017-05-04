@@ -24,11 +24,6 @@ public class ItemSpecification implements Specification<Item> {
 		this.filter = filter;
 	}
 	
-	private void filterByTypeDetail(Root<Item> root, CriteriaQuery<?> query, CriteriaBuilder cb) {
-		if(!filter.getTypeDetailIds().isEmpty()){
-			predicates.add(root.get("typeDetail").in(filter.getTypeDetailIds()));
-		}
-	}
 	private void filterByProducer(Root<Item> root, CriteriaQuery<?> query, CriteriaBuilder cb) {
 		if(!filter.getProducerIds().isEmpty()){
 			predicates.add(root.get("producer").in(filter.getProducerIds()));
@@ -39,7 +34,11 @@ public class ItemSpecification implements Specification<Item> {
 			predicates.add(root.get("nameDetail").in(filter.getNameDetailIds()));
 		}
 	}
-	
+	private void filterByTypeDetail(Root<Item> root, CriteriaQuery<?> query, CriteriaBuilder cb) {
+		if(!filter.getTypeDetailIds().isEmpty()){
+			predicates.add(root.get("nameDetail").in(filter.getTypeDetailIds()));
+		}
+	}
 	
 	private void filterByPrice(Root<Item> root, CriteriaQuery<?> query, CriteriaBuilder cb){
 		if(filter.getMax()!=null&&filter.getMin()!=null){
@@ -51,6 +50,8 @@ public class ItemSpecification implements Specification<Item> {
 		}
 	}
 	
+	
+	
 	private void fetch(Root<Item> root, CriteriaQuery<?> query){
 		if(query.getResultType()!=Long.class){
 			root.fetch("typeDetail", JoinType.LEFT);
@@ -58,7 +59,6 @@ public class ItemSpecification implements Specification<Item> {
 			root.fetch("producer", JoinType.LEFT);
 			root.fetch("specification", JoinType.LEFT);
 			root.fetch("description", JoinType.LEFT);
-			/*Join<Item,ua.entity.Specification> join = root.join("nameStringSpecification", JoinType.LEFT);*/
 		}
 	}
 	
@@ -66,12 +66,14 @@ public class ItemSpecification implements Specification<Item> {
 	public Predicate toPredicate(Root<Item> root, CriteriaQuery<?> query,
 			CriteriaBuilder cb) {
 		fetch(root, query);
-		filterByTypeDetail(root, query, cb);
 		filterByNameDetail(root, query, cb);
 		filterByPrice(root, query, cb);
 		filterByProducer(root, query, cb);
-		
+		filterByTypeDetail(root, query, cb);
+		System.out.println("_________");
+
 		if(predicates.isEmpty())return null;
+		System.out.println("_________");
 		Predicate[] array = new Predicate[predicates.size()];
 		predicates.toArray(array);
 		return cb.and(array);

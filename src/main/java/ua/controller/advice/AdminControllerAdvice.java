@@ -1,10 +1,8 @@
-package ua.admin.controller.advice;
+package ua.controller.advice;
 
 import org.springframework.web.bind.annotation.ControllerAdvice;
 
-@ControllerAdvice("ua.controller.admin")
+@ControllerAdvice(value="ua.controller.admin")
 public class AdminControllerAdvice {
-	
-	
 	
 }
